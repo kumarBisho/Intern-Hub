@@ -1,0 +1,65 @@
+## Build Folders
+bin/
+obj/
+out/
+Debug/
+Release/
+
+## Visual Studio files
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## NuGet Packages
+*.nupkg
+packages/
+*.snupkg
+
+## Logs
+*.log
+
+## Cache
+*.cache
+*.tmp
+*.temp
+*.db
+
+## Publish outputs
+publish/
+artifacts/
+
+## Environment files
+*.env
+appsettings.Development.json
+appsettings.Local.json
+
+## Auto-generated files
+*.designer.cs
+*.generated.cs
+TestResults/
+*.coverage
+*.coveragexml
+
+## System files
+.DS_Store
+Thumbs.db
+
+## Rider / JetBrains
+.idea/
+*.iml
+
+## ASP.NET Generated
+wwwroot/lib/
+node_modules/
+
+## Azure
+*.azurePubxml
+PublishProfiles/
+
+## Other
+*.bak
+*.swp
+*.lock.json
