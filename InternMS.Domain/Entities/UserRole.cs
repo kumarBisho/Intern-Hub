@@ -6,7 +6,7 @@ namespace InternMS.Domain.Entities
     {
         public Guid UserId { get; set; }
         public User User { get; set; } = default!;
-        public Guid RoleId { get; set; }
+        public int RoleId { get; set; }
         public Role Role { get; set; } = default!;
     }
 }

@@ -12,7 +12,7 @@ namespace InternMS.Domain.Entities
         public string LastName { get; set; } = string.Empty;
         public bool IsActive { get; set; } = true;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public Profile? Profile { get; set;}
+        public UserProfile? Profile { get; set;}
         public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
         public ICollection<Project> CreateProjects { get; set; } = new List<Project>();
     }

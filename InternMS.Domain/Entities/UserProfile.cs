@@ -1,7 +1,11 @@
-namespace InternMS.Api.DTOs
+using System;
+
+namespace InternMS.Domain.Entities
 {
-    public class UpdateProfileDto
+    public class UserProfile
     {
+        public Guid UserId { get; set; }
+        public User User { get; set; } = default!;
         public string? Phone { get; set; }
         public string? Department { get; set; }
         public string? Position { get; set; }

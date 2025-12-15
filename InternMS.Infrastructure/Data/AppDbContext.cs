@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-// using InternMS.Domain.Entities;
+using InternMS.Domain.Entities;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace InternMS.Infrastructure.Data
 {
@@ -10,10 +11,10 @@ namespace InternMS.Infrastructure.Data
         {
         }
 
-        public DbSet<User> Users => Set<User> ()
+        public DbSet<User> Users => Set<User> ();
         public DbSet<Role> Roles => Set<Role>();
         public DbSet<UserRole> UserRoles => Set<UserRole>();
-        public DbSet<Profile> Profiles => Set<Profile>();
+        public DbSet<UserProfile> Profiles => Set<UserProfile>();
         public DbSet<Project> Projects => Set<Project>();
         public DbSet<ProjectAssignment> ProjectAssignments => Set<ProjectAssignment>();
         public DbSet<ProjectUpdate> ProjectUpdates => Set<ProjectUpdate>();
@@ -49,6 +50,7 @@ namespace InternMS.Infrastructure.Data
                 new Role { Id = 3, Name = "Intern" }
             );
         }
+
     }
 
     // UserCongigration
@@ -67,10 +69,10 @@ namespace InternMS.Infrastructure.Data
             builder.Property(u => u.IsActive).HasDefaultValue(true);
             builder.Property(u => u.CreatedAt).HasDefaultValueSql("now()");
 
-            // Relationships
+            // Relationships 
             builder.HasMany(u => u.UserRoles).WithOne(ur => ur.User).HasForeignKey(ur => ur.UserId);
-            builder.HasOne(u => u.Profile).WithOne(p => p.User).HasForeignKey<Profile>(p => p.UserId);
-            builder.HasMany(u => u.CreatedProjects).WithOne(p => p.CreatedBy).HasForeignKey(p => p.CreatedById);
+            builder.HasOne(u => u.Profile).WithOne(p => p.User).HasForeignKey<UserProfile>(p => p.UserId);
+            builder.HasMany(u => u.CreateProjects).WithOne(p => p.CreatedBy).HasForeignKey(p => p.CreatedById);
         }
     }
 
@@ -90,9 +92,9 @@ namespace InternMS.Infrastructure.Data
 
     // ProfileConfiguration
 
-    public class ProfileConfiguration : IEntityTypeConfiguration<Profile>
+    public class ProfileConfiguration : IEntityTypeConfiguration<UserProfile>
     {
-        public void Configure(EntityTypeBuilder<Profile> builder)
+        public void Configure(EntityTypeBuilder<UserProfile> builder)
         {
             builder.ToTable("profiles");
             builder.HasKey(p => p.UserId);
@@ -121,7 +123,7 @@ namespace InternMS.Infrastructure.Data
             builder.HasMany(p => p.Assignments).WithOne(a => a.Project).HasForeignKey(a => a.ProjectId);
             builder.HasMany(p => p.Updates).WithOne(u => u.Project).HasForeignKey(u => u.ProjectId);
 
-            builder.HasOne(p => p.CreatedBy).WithMany(u => u.CreatedProjects).HasForeignKey(p => p.CreatedById).OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(p => p.CreatedBy).WithMany(u => u.CreateProjects).HasForeignKey(p => p.CreatedById).OnDelete(DeleteBehavior.Restrict);
         }
     }
 
