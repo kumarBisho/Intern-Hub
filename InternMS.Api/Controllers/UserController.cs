@@ -7,7 +7,7 @@ using AutoMapper;
 namespace InternMS.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/Users")]
     [Authorize(Roles = "Admin")] 
 
     public class UserController : ControllerBase{

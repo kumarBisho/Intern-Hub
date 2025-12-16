@@ -9,7 +9,7 @@ namespace InternMS.Api.Controllers
 {
     [ApiController]
     [Authorize]
-    [Route("api/[controller]")]
+    [Route("api/Notification")]
     public class NotificationController : ControllerBase
     {
         private readonly INotificationService _notificationService;
@@ -20,8 +20,16 @@ namespace InternMS.Api.Controllers
             _mapper = mapper;
         }
 
-        private Guid GetUserId() =>
-            Guid.Parse(User.FindFirstValue("id"));
+        private Guid GetUserId()
+        {
+            var id = User.FindFirstValue("id");
+
+            if(!Guid.TryParse(id, out var userId))
+            {
+                throw new UnauthorizedAccessException("Invalid or missing user ID in token.");
+            }
+            return userId;
+        }
 
         [HttpGet]
         public async Task<IActionResult> GetMyNotifications()

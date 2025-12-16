@@ -4,11 +4,12 @@ using InternMS.Api.Services;
 using InternMS.Api.DTOs;
 using AutoMapper;
 using System.Security.Claims;
+using System.Security.Cryptography.X509Certificates;
 
 namespace InternMS.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/Projects")]
     public class ProjectController : ControllerBase
     {
         private readonly IProjectService _projectService;
@@ -22,7 +23,13 @@ namespace InternMS.Api.Controllers
 
         private Guid GetUserId()
         {
-            return Guid.Parse(User.FindFirstValue("id"));
+            var id = User.FindFirstValue("id");
+
+            if(!Guid.TryParse(id, out var userId))
+            {
+                throw new UnauthorizedAccessException("Invalid or missing user ID in token.");
+            }
+            return userId;
         }
 
         private string GetUserRole() =>

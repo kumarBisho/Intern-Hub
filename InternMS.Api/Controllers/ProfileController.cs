@@ -8,7 +8,7 @@ using System.Security.Claims;
 namespace InternMS.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/Profile")]
     public class ProfileController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -24,7 +24,12 @@ namespace InternMS.Api.Controllers
         [HttpGet("me")]
         public async Task<IActionResult> GetMyProfile()
         {
-            var userId = Guid.Parse(User.FindFirstValue("id"));
+            var id = User.FindFirstValue("id");
+
+            if(!Guid.TryParse(id, out var userId))
+            {
+                throw new UnauthorizedAccessException("Invalid or missing user ID in token.");
+            }
             var profile = await _userService.GetProfileAsync(userId);
 
             if (profile == null)
@@ -38,7 +43,12 @@ namespace InternMS.Api.Controllers
         [HttpPut("me")]
         public async Task<IActionResult> UpdateMyProfile([FromBody] UpdateProfileDto dto)
         {
-            var userId = Guid.Parse(User.FindFirstValue("id"));
+            var id = User.FindFirstValue("id");
+
+            if(!Guid.TryParse(id, out var userId))
+            {
+                throw new UnauthorizedAccessException("Invalid or missing user ID in token.");
+            }
             await _userService.UpdateProfileAsync(userId, dto);
             return NoContent();
         }
