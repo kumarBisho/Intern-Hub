@@ -49,9 +49,10 @@ namespace InternMS.Api.DTOs
 
             CreateMap<CreateUserDto, User>();
 
-            CreateMap<Profile, ProfileDto>();
+            // User profile mappings
+            CreateMap<UserProfile, ProfileDto>();
 
-            CreateMap<UpdateProfileDto, Profile>()
+            CreateMap<UpdateProfileDto, UserProfile>()
                 .ForAllMembers(opt => opt.Condition((src, dest, value) => value != null));
 
             CreateMap<Project, ProjectDto>()

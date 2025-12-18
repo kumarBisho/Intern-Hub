@@ -5,6 +5,7 @@ namespace InternMS.Domain.Entities
         NotStarted,
         InProgress,
         Blocked,
-        Completed
+        Completed,
+        Active
     }   
 }

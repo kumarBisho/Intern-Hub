@@ -8,7 +8,7 @@ namespace InternMS.Api.Controllers
 {
     [ApiController]
     [Route("api/Users")]
-    [Authorize(Roles = "Admin")] 
+    // [Authorize(Roles = "Admin")] 
 
     public class UserController : ControllerBase{
         private readonly IUserService _userService;

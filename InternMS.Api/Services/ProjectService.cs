@@ -24,8 +24,12 @@ namespace InternMS.Api.Services
                 Id = Guid.NewGuid(),
                 Title = dto.Title,
                 Description = dto.Description,
-                StartDate = dto.StartDate,
-                EndDate = dto.EndDate,
+                StartDate = dto.StartDate.HasValue 
+                    ? DateTime.SpecifyKind(dto.StartDate.Value, DateTimeKind.Utc) 
+                    : null,
+                EndDate = dto.EndDate.HasValue 
+                    ? DateTime.SpecifyKind(dto.EndDate.Value, DateTimeKind.Utc) 
+                    : null,
                 CreatedById = creatorId,
                 CreatedAt = DateTime.UtcNow
             };
@@ -118,15 +122,18 @@ namespace InternMS.Api.Services
 
             await _db.SaveChangesAsync();
 
-            // 🔎 Find mentor
-            var mentorId = project.Assignments.First().MentorId;
+            // 🔎 Find mentor (if any assignment exists)
+            var firstAssignment = project.Assignments.FirstOrDefault();
+            if (firstAssignment?.MentorId != null)
+            {
+                // 🔔 Send notification to mentor
+                await _notificationService.CreateNotificationAsync(
+                    firstAssignment.MentorId,
+                    "Project Updated",
+                    "Your intern has updated the project status."
+                );
+            }
 
-            // 🔔 Send notification to mentor
-            await _notificationService.CreateNotificationAsync(
-                mentorId,
-                "Project Updated",
-                "Your intern has updated the project status."
-            );
             return update;
         }
     }
