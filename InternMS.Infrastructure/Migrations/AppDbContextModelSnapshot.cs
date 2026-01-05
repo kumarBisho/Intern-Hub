@@ -93,9 +93,14 @@ namespace InternMS.Infrastructure.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CreatedById");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("projects", (string)null);
                 });
@@ -132,6 +137,41 @@ namespace InternMS.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("project_assignments", (string)null);
+                });
+
+            modelBuilder.Entity("InternMS.Domain.Entities.ProjectTask", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Priority")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("project_tasks", (string)null);
                 });
 
             modelBuilder.Entity("InternMS.Domain.Entities.ProjectUpdate", b =>
@@ -314,6 +354,10 @@ namespace InternMS.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("InternMS.Domain.Entities.User", null)
+                        .WithMany("CreateTasks")
+                        .HasForeignKey("UserId");
+
                     b.Navigation("CreatedBy");
                 });
 
@@ -340,6 +384,17 @@ namespace InternMS.Infrastructure.Migrations
                     b.Navigation("Intern");
 
                     b.Navigation("Mentor");
+
+                    b.Navigation("Project");
+                });
+
+            modelBuilder.Entity("InternMS.Domain.Entities.ProjectTask", b =>
+                {
+                    b.HasOne("InternMS.Domain.Entities.Project", "Project")
+                        .WithMany("Tasks")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Project");
                 });
@@ -397,6 +452,8 @@ namespace InternMS.Infrastructure.Migrations
                 {
                     b.Navigation("Assignments");
 
+                    b.Navigation("Tasks");
+
                     b.Navigation("Updates");
                 });
 
@@ -408,6 +465,8 @@ namespace InternMS.Infrastructure.Migrations
             modelBuilder.Entity("InternMS.Domain.Entities.User", b =>
                 {
                     b.Navigation("CreateProjects");
+
+                    b.Navigation("CreateTasks");
 
                     b.Navigation("Profile");
 

@@ -16,6 +16,7 @@ namespace InternMS.Infrastructure.Data
         public DbSet<UserRole> UserRoles => Set<UserRole>();
         public DbSet<UserProfile> Profiles => Set<UserProfile>();
         public DbSet<Project> Projects => Set<Project>();
+        public DbSet<ProjectTask> ProjectTasks => Set<ProjectTask>();
         public DbSet<ProjectAssignment> ProjectAssignments => Set<ProjectAssignment>();
         public DbSet<ProjectUpdate> ProjectUpdates => Set<ProjectUpdate>();
         public DbSet<Notification> Notifications => Set<Notification>();
@@ -28,6 +29,7 @@ namespace InternMS.Infrastructure.Data
             modelBuilder.ApplyConfiguration(new UserRoleConfiguration());
             modelBuilder.ApplyConfiguration(new ProfileConfiguration());
             modelBuilder.ApplyConfiguration(new ProjectConfiguration());
+            modelBuilder.ApplyConfiguration(new ProjectTaskConfiguration());
             modelBuilder.ApplyConfiguration(new ProjectAssignmentConfiguration());
             modelBuilder.ApplyConfiguration(new ProjectUpdateConfiguration());
             modelBuilder.ApplyConfiguration(new NotificationConfiguration());
@@ -124,6 +126,22 @@ namespace InternMS.Infrastructure.Data
             builder.HasMany(p => p.Updates).WithOne(u => u.Project).HasForeignKey(u => u.ProjectId);
 
             builder.HasOne(p => p.CreatedBy).WithMany(u => u.CreateProjects).HasForeignKey(p => p.CreatedById).OnDelete(DeleteBehavior.Restrict);
+        }
+    }
+
+    public class ProjectTaskConfiguration : IEntityTypeConfiguration<ProjectTask>
+    {
+        public void Configure(EntityTypeBuilder<ProjectTask> builder)
+        {
+            builder.ToTable("project_tasks");
+            builder.HasKey(p => p.Id);
+            builder.Property(p => p.Title).IsRequired().HasMaxLength(255);
+            builder.Property(p => p.Status).HasConversion<string>().IsRequired();
+            builder.Property(p => p.Priority).HasConversion<string>().IsRequired();
+            builder.HasOne(t => t.Project)
+              .WithMany(p => p.Tasks)
+              .HasForeignKey(t => t.ProjectId)
+              .OnDelete(DeleteBehavior.Cascade);
         }
     }
 

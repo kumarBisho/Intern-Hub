@@ -1,6 +1,6 @@
 namespace InternMS.Domain.Entities
 {
-    public enum ProjectStatus
+    public enum ProjectTaskStatus
     {
         Active = 1,
         InProgress = 2,

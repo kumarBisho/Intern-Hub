@@ -34,6 +34,7 @@ using AutoMapper;
 using AutoMapperProfile = AutoMapper.Profile;
 using InternMS.Domain.Entities;
 using System.Linq;
+using InternMS.Api.DTOs.Tasks;
 
 namespace InternMS.Api.DTOs
 {
@@ -68,6 +69,42 @@ namespace InternMS.Api.DTOs
             CreateMap<CreateProjectUpdateDto, ProjectUpdate>();
 
             CreateMap<Notification, NotificationDto>();
+
+            CreateMap<ProjectTask, TaskDto>()
+                .ForMember(dest => dest.Priority,
+                    opt => opt.MapFrom(src => src.Priority.ToString()))
+                .ForMember(dest => dest.Status,
+                    opt => opt.MapFrom(src => src.Status.ToString()));
+
+            CreateMap<ProjectTask, TaskListDto>()
+                .ForMember(dest => dest.Priority,
+                    opt => opt.MapFrom(src => src.Priority.ToString()))
+                .ForMember(dest => dest.Status,
+                    opt => opt.MapFrom(src => src.Status.ToString()));
+
+            CreateMap<CreateTaskDto, ProjectTask>()
+                .ForMember(dest => dest.Priority,
+                    opt => opt.MapFrom(src =>
+                        Enum.Parse<Priority>(src.Priority, true)))
+                .ForMember(dest => dest.Status,
+                    opt => opt.MapFrom(_ => ProjectTaskStatus.Active))
+                .ForMember(dest => dest.CreatedAt,
+                    opt => opt.MapFrom(_ => DateTime.UtcNow));
+
+            CreateMap<UpdateTaskDto, ProjectTask>()
+                .ForMember(dest => dest.Priority,
+                    opt => opt.MapFrom(src =>
+                        src.Priority != null
+                            ? Enum.Parse<Priority>(src.Priority, true)
+                            : default))
+                .ForMember(dest => dest.Status,
+                    opt => opt.MapFrom(src =>
+                        src.Status != null
+                            ? Enum.Parse<TaskStatus>(src.Status, true)
+                            : default))
+                .ForAllMembers(opt =>
+                    opt.Condition((src, dest, value) => value != null));
+                    
         }
     }
 }

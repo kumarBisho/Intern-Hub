@@ -8,7 +8,7 @@ namespace InternMS.Domain.Entities
         public Guid Id { get; set; }
         public string Title { get; set; } = string.Empty;
         public string? Description { get; set; }
-        public ProjectStatus Status { get; set; } = ProjectStatus.NotStarted;
+        public ProjectStatus Status { get; set; } = ProjectStatus.Active;
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; } 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
@@ -17,5 +17,7 @@ namespace InternMS.Domain.Entities
 
         public ICollection<ProjectAssignment> Assignments { get; set; } = new List<ProjectAssignment>();
         public ICollection<ProjectUpdate> Updates { get; set; } = new List<ProjectUpdate>();
+        public ICollection<ProjectTask> Tasks { get; set; } = new List<ProjectTask>();
     }
+
 }
