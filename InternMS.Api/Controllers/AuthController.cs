@@ -48,7 +48,7 @@ namespace InternMS.Api.Controllers
         // Register - restrict to Admin role (change as needed)
         [AllowAnonymous]
         [HttpPost("register")]
-        // [Authorize(Roles = "Admin,Mentor,Intern")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Register([FromBody] CreateUserDto request)
         {
             try

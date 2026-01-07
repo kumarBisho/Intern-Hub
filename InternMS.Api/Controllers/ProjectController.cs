@@ -35,7 +35,7 @@ namespace InternMS.Api.Controllers
         private string GetUserRole() =>
             User.FindFirstValue(ClaimTypes.Role) ?? "Intern";
 
-        // [Authorize(Roles = "Admin,Mentor")]
+        [Authorize(Roles = "Admin,Mentor")]
         [HttpPost]
         public async Task<IActionResult> CreateProject([FromBody] CreateProjectDto dto)
         {
@@ -45,7 +45,7 @@ namespace InternMS.Api.Controllers
             return Ok(_mapper.Map<ProjectDto>(project));
         }
 
-        // [Authorize(Roles = "Admin,Mentor")]
+        [Authorize(Roles = "Admin,Mentor")]
         [HttpPost("{projectId}/assign")]
         public async Task<IActionResult> Assign(Guid projectId, [FromBody] AssignProjectDto dto)
         {
@@ -75,7 +75,7 @@ namespace InternMS.Api.Controllers
             return Ok(project);
         }
 
-        // [Authorize(Roles = "Admin,Mentor,Intern")]
+        [Authorize(Roles = "Admin,Mentor")]
         [HttpPost("{projectId}/update")]
         public async Task<IActionResult> UpdateProject(Guid projectId, [FromBody] CreateProjectUpdateDto dto)
         {

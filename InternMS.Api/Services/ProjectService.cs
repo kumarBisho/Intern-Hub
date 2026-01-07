@@ -1,3 +1,4 @@
+using AutoMapper;
 using InternMS.Api.Services;
 using InternMS.Infrastructure.Data;
 using InternMS.Domain.Entities;
@@ -10,11 +11,13 @@ namespace InternMS.Api.Services
     {
         private readonly AppDbContext _db;
         private readonly INotificationService _notificationService;
+        private readonly IMapper _mapper;
 
-        public ProjectService(AppDbContext db, INotificationService notificationService)
+        public ProjectService(AppDbContext db, INotificationService notificationService, IMapper mapper)
         {
             _db = db;
              _notificationService = notificationService;
+             _mapper = mapper;
         }
 
         public async Task<Project> CreateProjectAsync(Guid creatorId, CreateProjectDto dto)
@@ -97,7 +100,7 @@ namespace InternMS.Api.Services
             );
         }
 
-        public async Task<ProjectUpdate> AddProjectUpdateAsync(Guid projectId, Guid authorId, CreateProjectUpdateDto dto)
+        public async Task<ProjectUpdateDto> AddProjectUpdateAsync(Guid projectId, Guid authorId, CreateProjectUpdateDto dto)
         {
             var update = new ProjectUpdate
             {
@@ -134,7 +137,7 @@ namespace InternMS.Api.Services
                 );
             }
 
-            return update;
+            return _mapper.Map<ProjectUpdateDto>(update);
         }
     }
 }
