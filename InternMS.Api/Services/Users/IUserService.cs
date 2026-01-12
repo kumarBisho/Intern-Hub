@@ -1,8 +1,9 @@
-using InternMS.Api.DTOs;
+using InternMS.Api.DTOs.Users;
+using InternMS.Api.DTOs.Profiles;
 using InternMS.Domain.Entities;
 
 
-namespace InternMS.Api.Services
+namespace InternMS.Api.Services.Users   
 {
     public interface IUserService
     {

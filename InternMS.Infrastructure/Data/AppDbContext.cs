@@ -87,6 +87,7 @@ namespace InternMS.Infrastructure.Data
             builder.ToTable("user_roles");
             builder.HasKey(ur => new { ur.UserId, ur.RoleId });
 
+            // Relationships
             builder.HasOne(ur => ur.User).WithMany(u => u.UserRoles).HasForeignKey(ur => ur.UserId);
             builder.HasOne(ur => ur.Role).WithMany(r => r.UserRoles).HasForeignKey(ur => ur.RoleId);
         }
@@ -122,6 +123,7 @@ namespace InternMS.Infrastructure.Data
             builder.Property(p => p.Status).HasConversion<string>().IsRequired();
             builder.Property(p => p.CreatedAt).HasDefaultValueSql("now()");
 
+            // Relationships
             builder.HasMany(p => p.Assignments).WithOne(a => a.Project).HasForeignKey(a => a.ProjectId);
             builder.HasMany(p => p.Updates).WithOne(u => u.Project).HasForeignKey(u => u.ProjectId);
 

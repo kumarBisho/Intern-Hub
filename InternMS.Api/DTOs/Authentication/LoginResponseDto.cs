@@ -1,4 +1,6 @@
-namespace InternMS.Api.DTOs
+using InternMS.Api.DTOs.Users;
+
+namespace InternMS.Api.DTOs.Authentication
 {
     public class LoginResponseDto
     {

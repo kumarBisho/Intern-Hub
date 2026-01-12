@@ -1,4 +1,4 @@
-namespace InternMS.Api.DTOs
+namespace InternMS.Api.DTOs.Projects
 {
     public class AssignProjectDto
     {

@@ -1,7 +1,7 @@
-using InternMS.Api.DTOs;
+using InternMS.Api.DTOs.Projects;
 using InternMS.Domain.Entities;
 
-namespace InternMS.Api.Services
+namespace InternMS.Api.Services.Projects
 {
     public interface IProjectService
     {

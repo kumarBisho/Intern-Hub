@@ -1,4 +1,4 @@
-namespace InternMS.Api.DTOs
+namespace InternMS.Api.DTOs.Profiles
 {
     public class UpdateProfileDto
     {

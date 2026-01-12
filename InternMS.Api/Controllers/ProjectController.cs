@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using InternMS.Api.Services;
-using InternMS.Api.DTOs;
+using InternMS.Api.Services.Projects;
+using InternMS.Api.DTOs.Projects;
 using AutoMapper;
 using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;

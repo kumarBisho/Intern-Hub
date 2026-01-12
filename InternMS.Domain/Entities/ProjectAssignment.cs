@@ -11,9 +11,7 @@ namespace InternMS.Domain.Entities
         public User Intern { get; set; } = default!;
         public Guid MentorId { get; set; } 
         public User Mentor { get; set; } = default!;
-
         public DateTime AssignedAt { get; set; }= DateTime.UtcNow;
-
 
     }
 }

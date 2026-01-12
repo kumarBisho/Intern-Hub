@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using InternMS.Domain.Entities;
 
-namespace InternMS.Api.Auth
+namespace InternMS.Api.Services.Auth
 {
     public interface IAuthService
     {

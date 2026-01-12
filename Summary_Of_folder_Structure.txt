@@ -1,0 +1,126 @@
+InternHub
+|
+├──backend
+|    │
+|    ├── InternMS.Domain
+|    │   ├── Entities
+|    │   │   ├── User.cs
+|    │   │   ├── Role.cs
+|    │   │   ├── UserRole.cs
+|    │   │   ├── Profile.cs
+|    │   │   ├── Project.cs
+|    │   │   ├── ProjectTask.cs
+|    │   │   ├── ProjectUpdate.cs
+|    │   │   ├── Notification.cs
+|    │   │
+|    │   ├── Enums
+|    │   │   ├── ProjectStatus.cs
+|    │   │   ├── TaskStatus.cs
+|    │   │   ├── Priority.cs
+|    │   │
+|    │   └── InternMS.Domain.csproj
+|    │
+|    ├── InternMS.Infrastructure
+|    │   ├── Data
+|    │   │   ├── AppDbContext.cs
+|    │   │
+|    │   ├── Configurations
+|    │   │   ├── UserConfiguration.cs
+|    │   │   ├── ProjectConfiguration.cs
+|    │   │   ├── ProjectTaskConfiguration.cs
+|    │   │   ├── ProjectUpdateConfiguration.cs
+|    │   │   ├── NotificationConfiguration.cs
+|    │   │
+|    │   ├── Migrations
+|    │   │   ├── 2025xxxx_InitialCreate.cs
+|    │   │   ├── 2025xxxx_AddProjectTask.cs
+|    │   │   └── ...
+|    │   │
+|    │   └── InternMS.Infrastructure.csproj
+|    │
+|    ├── InternMS.Api
+|    │   ├── Controllers
+|    │   │   ├── AuthController.cs
+|    │   │   ├── UsersController.cs
+|    │   │   ├── ProfileController.cs
+|    │   │   ├── ProjectsController.cs
+|    │   │   ├── TaskController.cs
+|    │   │   ├── NotificationController.cs
+|    │   │   └── DashboardController.cs
+|    │   │
+|    │   ├── Services
+|    │   │   ├── Auth
+|    │   │   │   ├── IAuthService.cs
+|    │   │   │   └── AuthService.cs
+|    │   │   │
+|    │   │   ├── Dashboard
+|    │   │   │   ├── IDashboardService.cs
+|    │   │   │   └── DashboardService.cs
+|    │   │   │
+|    │   │   ├── Tasks
+|    │   │   │   ├── ITaskService.cs
+|    │   │   │   └── TaskService.cs
+|    │   │   │
+|    │   │   ├── Users
+|    │   │   │   ├── IUserService.cs
+|    │   │   │   └── UserService.cs
+|    │   │   │
+|    │   │   ├── Projects
+|    │   │   │   ├── IProjectService.cs
+|    │   │   │   └── ProjectService.cs
+|    │   │   │
+|    │   │   ├── Notifications
+|    │   │       ├── INotificationService.cs
+|    │   │       └── NotificationService.cs
+|    │   │
+|    │   ├── DTOs
+|    │   │   ├── Auth
+|    │   │   │   ├── LoginRequestDto.cs
+|    │   │   │   ├── RegisterRequestDto.cs
+|    │   │   │   └── AuthResponseDto.cs
+|    │   │   │
+|    │   │   ├── Users
+|    │   │   │   ├── UserDto.cs
+|    │   │   │   └── CreateUserDto.cs
+|    │   │   │
+|    │   │   ├── Profile
+|    │   │   │   ├── ProfileDto.cs
+|    │   │   │   └── UpdateProfileDto.cs
+|    │   │   │
+|    │   │   ├── Projects
+|    │   │   │   ├── ProjectDto.cs
+|    │   │   │   ├── CreateProjectDto.cs
+|    │   │   │   ├── ProjectUpdateDto.cs
+|    │   │   │   └── CreateProjectUpdateDto.cs
+|    │   │   │
+|    │   │   ├── Tasks
+|    │   │   │   ├── TaskDto.cs
+|    │   │   │   ├── TaskListDto.cs
+|    │   │   │   ├── CreateTaskDto.cs
+|    │   │   │   └── UpdateTaskDto.cs
+|    │   │   │
+|    │   │   ├── Dashboard
+|    │   │   │   ├── DashboardSummaryDto.cs
+|    │   │   │   ├── InternDashboardDto.cs
+|    │   │   │   ├── MentorDashboardDto.cs
+|    │   │   │   └── AdminDashboardDto.cs
+|    │   │   │
+|    │   │   └── MappingProfile.cs
+|    │   │
+|    │   ├── Auth
+|    │   │   ├── ITokenService.cs
+|    │   │   └── JwtTokenService.cs
+|    │   │
+|    │   ├── Hubs
+|    │   │   └── NotificationHub.cs
+|    │   │
+|    │   ├── Program.cs
+|    │   ├── appsettings.json
+|    │   ├── appsettings.Development.json
+|    │   └── InternMS.Api.csproj
+|    │
+|    ├── InternMS.sln
+|    └── README.md
+|
+├──frontend
+|

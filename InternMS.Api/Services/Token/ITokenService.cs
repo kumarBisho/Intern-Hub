@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 
-namespace InternMS.Api.Auth
+namespace InternMS.Api.Services.Token
 {
     public interface ITokenService
     {

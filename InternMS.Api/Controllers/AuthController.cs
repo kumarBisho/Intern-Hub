@@ -1,11 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using InternMS.Api.DTOs;
-using InternMS.Api.Auth;
+using InternMS.Api.DTOs.Authentication;
+using InternMS.Api.DTOs.Users;
+using InternMS.Api.Services.Auth;
+using InternMS.Api.Services.Token;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using System.Linq;
-
 
 namespace InternMS.Api.Controllers
 {

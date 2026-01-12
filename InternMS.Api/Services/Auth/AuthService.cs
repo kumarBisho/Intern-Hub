@@ -6,7 +6,7 @@ using InternMS.Infrastructure.Data;
 using InternMS.Domain.Entities;
 using System;
 
-namespace InternMS.Api.Auth
+namespace InternMS.Api.Services.Auth
 {
     public class AuthService : IAuthService
     {

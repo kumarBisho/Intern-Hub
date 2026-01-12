@@ -2,10 +2,10 @@ using AutoMapper;
 using InternMS.Api.Services;
 using InternMS.Infrastructure.Data;
 using InternMS.Domain.Entities;
-using InternMS.Api.DTOs;
+using InternMS.Api.DTOs.Projects;
 using Microsoft.EntityFrameworkCore;
 
-namespace InternMS.Api.Services
+namespace InternMS.Api.Services.Projects
 {
     public class ProjectService : IProjectService
     {
