@@ -38,6 +38,7 @@ using InternMS.Api.DTOs.Tasks;
 using InternMS.Api.DTOs.Users;
 using InternMS.Api.DTOs.Profiles;
 using InternMS.Api.DTOs.Projects;
+using InternMS.Api.DTOs.Notifications;
 
 namespace InternMS.Api.DTOs
 {

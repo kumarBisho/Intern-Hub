@@ -1,4 +1,4 @@
-namespace InternMS.Api.DTOs.Notification
+namespace InternMS.Api.DTOs.Notifications
 {
     public class NotificationDto
     {
