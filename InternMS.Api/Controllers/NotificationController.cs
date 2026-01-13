@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using InternMS.Api.Services;
 using AutoMapper;
-using InternMS.Api.DTOs;
+using InternMS.Api.DTOs.Notification;
 using System.Security.Claims;
 
 namespace InternMS.Api.Controllers
