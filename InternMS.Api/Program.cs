@@ -8,7 +8,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using InternMS.Api.Hubs;
-using InternMS.Api.Auth;
+using InternMS.Api.Services.Auth;
+using InternMS.Api.Services.Token;
+using InternMS.Api.Services.Projects;
+using InternMS.Api.Services.Users;
+
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -44,9 +44,9 @@ namespace InternMS.Api.Services.Projects
         public async Task<Project?> GetProjectByIdAsync(Guid id)
         {
             return await _db.Projects
-                .Include(p => p.Assignments).ThenInclude(a => a.Intern)
-                .Include(p => p.Assignments).ThenInclude(a => a.Mentor)
-                .Include(p => p.Updates).ThenInclude(u => u.Author)
+                // .Include(p => p.Assignments).ThenInclude(a => a.Intern)
+                // .Include(p => p.Assignments).ThenInclude(a => a.Mentor)
+                // .Include(p => p.Updates).ThenInclude(u => u.Author)
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
 

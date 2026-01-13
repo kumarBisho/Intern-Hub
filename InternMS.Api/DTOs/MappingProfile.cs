@@ -35,6 +35,9 @@ using AutoMapperProfile = AutoMapper.Profile;
 using InternMS.Domain.Entities;
 using System.Linq;
 using InternMS.Api.DTOs.Tasks;
+using InternMS.Api.DTOs.Users;
+using InternMS.Api.DTOs.Profiles;
+using InternMS.Api.DTOs.Projects;
 
 namespace InternMS.Api.DTOs
 {

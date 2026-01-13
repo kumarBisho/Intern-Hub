@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using InternMS.Api.Services;
-using InternMS.Api.DTOs;
+using InternMS.Api.Services.Users;
+using InternMS.Api.DTOs.Profiles;
 using AutoMapper;
 using System.Security.Claims;
 
