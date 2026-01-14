@@ -12,6 +12,7 @@ using InternMS.Api.Services.Auth;
 using InternMS.Api.Services.Token;
 using InternMS.Api.Services.Projects;
 using InternMS.Api.Services.Users;
+using InternMS.Api.Middleware;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -98,6 +99,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowFrontend");
 
 app.UseAuthentication();
+app.UseMiddleware<TokenBlacklistMiddleware>();
 app.UseAuthorization();
 
 app.MapControllers();

@@ -12,6 +12,7 @@ namespace InternMS.Infrastructure.Data
         }
 
         public DbSet<User> Users => Set<User> ();
+        public DbSet<BlacklistedToken> BlacklistedTokens => Set<BlacklistedToken>();
         public DbSet<Role> Roles => Set<Role>();
         public DbSet<UserRole> UserRoles => Set<UserRole>();
         public DbSet<UserProfile> Profiles => Set<UserProfile>();

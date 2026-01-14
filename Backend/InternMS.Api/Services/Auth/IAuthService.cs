@@ -8,5 +8,8 @@ namespace InternMS.Api.Services.Auth
     {
         Task<User?> ValidateCredentialsAsync(string email, string password);
         Task<User?> RegisterUserAsync(string email, string password, string firstName, string lastName, int roleId);
+        Task LogoutAsync(string token);
+        Task<bool> IsTokenBlacklistedAsync(string token);
+
     }
 }

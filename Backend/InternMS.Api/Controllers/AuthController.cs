@@ -5,6 +5,7 @@ using InternMS.Api.Services.Auth;
 using InternMS.Api.Services.Token;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using InternMS.Api.Middleware;
 
 namespace InternMS.Api.Controllers
 {
@@ -25,7 +26,26 @@ namespace InternMS.Api.Controllers
             _mapper = mapper;
         }
 
+        // Register - restrict to Admin role (change as needed)
+        [AllowAnonymous]
+        [HttpPost("register")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Register([FromBody] CreateUserDto request)
+        {
+            try
+            {
+            var user = await _authService.RegisterUserAsync(request.Email, request.Password, request.FirstName, request.LastName, request.RoleId);
+            var userDto = _mapper.Map<UserDto>(user);
+            return Ok(userDto);
+            }
+            catch (System.Exception ex)
+            {
+            return BadRequest(new { message = ex.Message });
+            }
+        }
 
+
+        // Login User
         [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDto request)
@@ -44,22 +64,20 @@ namespace InternMS.Api.Controllers
         }
 
 
-        // Register - restrict to Admin role (change as needed)
+        // Logout User
         [AllowAnonymous]
-        [HttpPost("register")]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Register([FromBody] CreateUserDto request)
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
         {
-            try
+            var authHeader = Request.Headers["Authorization"].ToString();
+            if (!authHeader.StartsWith("Bearer "))
             {
-            var user = await _authService.RegisterUserAsync(request.Email, request.Password, request.FirstName, request.LastName, request.RoleId);
-            var userDto = _mapper.Map<UserDto>(user);
-            return Ok(userDto);
+                return BadRequest(new { message = "Invalid token format." });
             }
-            catch (System.Exception ex)
-            {
-            return BadRequest(new { message = ex.Message });
-            }
+
+            var token = authHeader.Replace("Bearer ", "");
+            await _authService.LogoutAsync(token);
+            return Ok(new { message = "Successfully logged out." });
         }
     }
 }

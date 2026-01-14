@@ -64,5 +64,26 @@ namespace InternMS.Api.Services.Auth
             return user;
         }
 
+        public async Task LogoutAsync(string token)
+        {
+            var handler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
+            var jwt = handler.ReadJwtToken(token);
+
+            var expiryDate = jwt.ValidTo;
+            var blacklistedToken = new BlacklistedToken
+            {
+                Token = token,
+                ExpiryDate = expiryDate,
+                RevokedAt = DateTime.UtcNow
+            };
+            _db.BlacklistedTokens.Add(blacklistedToken);
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task<bool> IsTokenBlacklistedAsync(string token)
+        {
+            return await _db.BlacklistedTokens.AnyAsync(t=> t.Token == token && t.ExpiryDate > DateTime.UtcNow);
+        }
+
     }
 }
