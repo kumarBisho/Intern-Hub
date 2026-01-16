@@ -52,6 +52,19 @@ namespace InternMS.Api.Services.Users
             await _db.SaveChangesAsync();
         }
 
+        public async Task DeleteUserAsync(Guid id)
+        {
+            var user = await _db.Users.FirstOrDefaultAsync(u => u.Id == id);
+
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
+
+            _db.Users.Remove(user);
+            await _db.SaveChangesAsync();
+        }
+
         public async Task<UserProfile?> GetProfileAsync(Guid userId)
         {
             return await _db.Profiles.FirstOrDefaultAsync(p => p.UserId == userId);

@@ -54,5 +54,13 @@ namespace InternMS.Api.Controllers
             await _notificationService.MarkAllAsReadAsync(userId);
             return Ok(new { message = "All notifications marked as read" });
         }
+        
+        [HttpDelete("clear-read")]
+        public async Task<IActionResult> ClearReadNotifications()
+        {
+            var userId = GetUserId();
+            await _notificationService.ClearReadNotificationsAsync(userId);
+            return Ok(new { message = "Read notifications cleared" });
+        }
     }
 }

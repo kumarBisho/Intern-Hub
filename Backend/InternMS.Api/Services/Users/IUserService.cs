@@ -10,6 +10,7 @@ namespace InternMS.Api.Services.Users
         Task<IEnumerable<User>> GetAllUsersAsync();
         Task<User?> GetUserByIdAsync(Guid id);
         Task UpdateUserAsync(Guid id, UserDto updatedUser);
+        Task DeleteUserAsync(Guid id);
         Task<UserProfile?> GetProfileAsync(Guid userId);
         Task UpdateProfileAsync(Guid userId, UpdateProfileDto dto);
     }

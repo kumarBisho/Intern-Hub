@@ -9,5 +9,6 @@ namespace InternMS.Api.Services
         Task<Notification> CreateNotificationAsync(Guid userId, string title, string message);
         Task MarkAsReadAsync(int notificationId, Guid userId);
         Task MarkAllAsReadAsync(Guid userId);
+        Task ClearReadNotificationsAsync(Guid userId);
     }
 }

@@ -74,6 +74,26 @@ namespace InternMS.Api.Services.Projects
                 .ToListAsync();
         }
 
+        public async Task<Project> UpdateProjectAsync(Guid projectId, CreateProjectDto dto)
+        {
+            var project = await _db.Projects.FirstOrDefaultAsync(p => p.Id == projectId);
+
+            if (project == null)
+                throw new Exception("Project not found");
+
+            project.Title = dto.Title;
+            project.Description = dto.Description;
+            project.StartDate = dto.StartDate.HasValue 
+                ? DateTime.SpecifyKind(dto.StartDate.Value, DateTimeKind.Utc) 
+                : null;
+            project.EndDate = dto.EndDate.HasValue 
+                ? DateTime.SpecifyKind(dto.EndDate.Value, DateTimeKind.Utc) 
+                : null;
+
+            await _db.SaveChangesAsync();
+            return project;
+        }
+
         public async Task AssignProjectAsync(Guid projectId, AssignProjectDto dto)
         {
             var exists = await _db.ProjectAssignments
@@ -138,6 +158,19 @@ namespace InternMS.Api.Services.Projects
             }
 
             return _mapper.Map<ProjectUpdateDto>(update);
+        }
+
+        public async Task DeleteProjectAsync(Guid id)
+        {
+            var project = await _db.Projects.FirstOrDefaultAsync(p => p.Id == id);
+
+            if (project == null)
+            {
+                throw new Exception("Project not found");
+            }
+
+            _db.Projects.Remove(project);
+            await _db.SaveChangesAsync();
         }
     }
 }

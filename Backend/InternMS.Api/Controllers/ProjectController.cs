@@ -75,6 +75,14 @@ namespace InternMS.Api.Controllers
             return Ok(project);
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateProject(Guid id, [FromBody] CreateProjectDto dto)
+        {
+            var project = await _projectService.UpdateProjectAsync(id, dto);
+            return Ok(project);
+        }
+
         [Authorize(Roles = "Admin,Mentor")]
         [HttpPost("{projectId}/update")]
         public async Task<IActionResult> UpdateProject(Guid projectId, [FromBody] CreateProjectUpdateDto dto)
@@ -82,6 +90,14 @@ namespace InternMS.Api.Controllers
             var userId = GetUserId();
             var update = await _projectService.AddProjectUpdateAsync(projectId, userId, dto);
             return Ok(update);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteProject(Guid id)
+        {
+            await _projectService.DeleteProjectAsync(id);
+            return NoContent();
         }
     }
 }

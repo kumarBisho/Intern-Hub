@@ -12,6 +12,7 @@ InternHub
 |    │   │   ├── ProjectTask.cs
 |    │   │   ├── ProjectUpdate.cs
 |    │   │   ├── Notification.cs
+|    │   │   ├── BlacklistedToken.cs
 |    │   │
 |    │   ├── Enums
 |    │   │   ├── ProjectStatus.cs
@@ -69,15 +70,19 @@ InternHub
 |    │   │   │   ├── IProjectService.cs
 |    │   │   │   └── ProjectService.cs
 |    │   │   │
+|    │   │   ├── Token
+|    │   │   │   ├── ITokenService.cs
+|    │   │   │   └── JwtTokenService.cs
+|    │   │   │
 |    │   │   ├── Notifications
 |    │   │       ├── INotificationService.cs
 |    │   │       └── NotificationService.cs
 |    │   │
 |    │   ├── DTOs
-|    │   │   ├── Auth
+|    │   │   ├── Authentication
 |    │   │   │   ├── LoginRequestDto.cs
-|    │   │   │   ├── RegisterRequestDto.cs
-|    │   │   │   └── AuthResponseDto.cs
+|    │   │   │   ├── LoginResponseDto.cs
+|    │   │   │   └── LogoutRquestDto.cs
 |    │   │   │
 |    │   │   ├── Users
 |    │   │   │   ├── UserDto.cs
@@ -105,6 +110,9 @@ InternHub
 |    │   │   │   ├── MentorDashboardDto.cs
 |    │   │   │   └── AdminDashboardDto.cs
 |    │   │   │
+|    │   │   ├── Notifications
+|    │   │   │   ├── NotificationDto.cs
+|    │   │   │
 |    │   │   └── MappingProfile.cs
 |    │   │
 |    │   ├── Auth
@@ -120,6 +128,7 @@ InternHub
 |    │   └── InternMS.Api.csproj
 |    │
 |    ├── InternMS.sln
+|    ├── Summary_Of_folder_Structure.txt
 |    └── README.md
 |
 ├──frontend

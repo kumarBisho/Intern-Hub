@@ -59,5 +59,15 @@ namespace InternMS.Api.Services
 
             await _db.SaveChangesAsync();
         }
+
+        public async Task ClearReadNotificationsAsync(Guid userId)
+        {
+            var readNotifications = await _db.Notifications
+                .Where(n => n.UserId == userId && n.IsRead)
+                .ToListAsync();
+
+            _db.Notifications.RemoveRange(readNotifications);
+            await _db.SaveChangesAsync();
+        }
     }
 }

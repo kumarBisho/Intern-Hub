@@ -47,5 +47,13 @@ namespace InternMS.Api.Controllers
             await _userService.UpdateUserAsync(id, dto);
             return NoContent();
         }
+
+        // DELETE api/user/{id}
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            await _userService.DeleteUserAsync(id);
+            return NoContent();
+        }
     }
 }
