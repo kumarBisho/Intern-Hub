@@ -94,6 +94,29 @@ namespace InternMS.Api.Services.Projects
             return project;
         }
 
+        public async Task<Project> PartialUpdateProjectAsync(Guid projectId, PartialUpdateProjectDto dto)
+        {
+            var project = await _db.Projects.FirstOrDefaultAsync(p => p.Id == projectId);
+
+            if (project == null)
+                throw new Exception("Project not found");
+
+            if (dto.Title != null)
+                project.Title = dto.Title;
+
+            if (dto.Description != null)
+                project.Description = dto.Description;
+
+            if (dto.StartDate.HasValue)
+                project.StartDate = DateTime.SpecifyKind(dto.StartDate.Value, DateTimeKind.Utc);
+
+            if (dto.EndDate.HasValue)
+                project.EndDate = DateTime.SpecifyKind(dto.EndDate.Value, DateTimeKind.Utc);
+
+            await _db.SaveChangesAsync();
+            return project;
+        }
+
         public async Task AssignProjectAsync(Guid projectId, AssignProjectDto dto)
         {
             var exists = await _db.ProjectAssignments

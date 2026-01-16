@@ -9,6 +9,7 @@ namespace InternMS.Api.Services.Projects
         Task<Project?> GetProjectByIdAsync(Guid id);
         Task<IEnumerable<Project>> GetProjectsForUserAsync(Guid userId, string role);
         Task<Project> UpdateProjectAsync(Guid projectId, CreateProjectDto dto);
+        Task<Project> PartialUpdateProjectAsync(Guid projectId, PartialUpdateProjectDto dto);
         Task AssignProjectAsync(Guid projectId, AssignProjectDto dto);
         Task<ProjectUpdateDto> AddProjectUpdateAsync(Guid projectId, Guid authorId, CreateProjectUpdateDto dto);
         Task DeleteProjectAsync(Guid id);

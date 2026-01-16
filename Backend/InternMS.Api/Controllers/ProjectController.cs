@@ -84,6 +84,14 @@ namespace InternMS.Api.Controllers
         }
 
         [Authorize(Roles = "Admin,Mentor")]
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> PartialUpdateProject(Guid id, [FromBody] PartialUpdateProjectDto dto)
+        {
+            var project = await _projectService.PartialUpdateProjectAsync(id, dto);
+            return Ok(project);
+        }
+
+        [Authorize(Roles = "Admin,Mentor")]
         [HttpPost("{projectId}/update")]
         public async Task<IActionResult> UpdateProject(Guid projectId, [FromBody] CreateProjectUpdateDto dto)
         {

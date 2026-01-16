@@ -31,6 +31,10 @@ InternHub
 |    │   │   ├── ProjectTaskConfiguration.cs
 |    │   │   ├── ProjectUpdateConfiguration.cs
 |    │   │   ├── NotificationConfiguration.cs
+|    │   │   ├── ProfileConfiguration.cs
+|    │   │   ├── ProjectAssignmentConfiguration.cs
+|    │   │   ├── RoleConfiguration.cs
+|    │   │   ├── UserRoleConfiguration.cs
 |    │   │
 |    │   ├── Migrations
 |    │   │   ├── 2025xxxx_InitialCreate.cs
@@ -115,10 +119,6 @@ InternHub
 |    │   │   │
 |    │   │   └── MappingProfile.cs
 |    │   │
-|    │   ├── Auth
-|    │   │   ├── ITokenService.cs
-|    │   │   └── JwtTokenService.cs
-|    │   │
 |    │   ├── Hubs
 |    │   │   └── NotificationHub.cs
 |    │   │
@@ -132,4 +132,6 @@ InternHub
 |    └── README.md
 |
 ├──frontend
+|
+├──infra
 |
