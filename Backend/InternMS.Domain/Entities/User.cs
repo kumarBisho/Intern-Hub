@@ -15,6 +15,6 @@ namespace InternMS.Domain.Entities
         public UserProfile? Profile { get; set;}
         public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
         public ICollection<Project> CreateProjects { get; set; } = new List<Project>();
-        public ICollection<Project> CreateTasks { get; set; } = new List<Project>();
+        public ICollection<ProjectTask> CreateTasks { get; set; } = new List<ProjectTask>();
     }
 }

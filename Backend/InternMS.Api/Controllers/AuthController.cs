@@ -11,7 +11,7 @@ namespace InternMS.Api.Controllers
 {
     [ApiController]
     [Route("api/Auth")]
-    [AllowAnonymous]
+    // [Authorize]
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
@@ -27,9 +27,9 @@ namespace InternMS.Api.Controllers
         }
 
         // Register - restrict to Admin role (change as needed)
-        [AllowAnonymous]
+        
         [HttpPost("register")]
-        [Authorize(Roles = "Admin")]
+        // [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Register([FromBody] CreateUserDto request)
         {
             try
@@ -46,7 +46,6 @@ namespace InternMS.Api.Controllers
 
 
         // Login User
-        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDto request)
         {
@@ -65,7 +64,6 @@ namespace InternMS.Api.Controllers
 
 
         // Logout User
-        [AllowAnonymous]
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()
         {

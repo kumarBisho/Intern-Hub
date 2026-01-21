@@ -10,8 +10,7 @@ namespace InternMS.Domain.Entities
         public Guid AuthorId { get; set; }
         public User Author { get; set; } = default!;
         public ProjectStatus Status { get; set; } 
-        public String? Comment { get; set; }
-
+        public string? Comment { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     }
