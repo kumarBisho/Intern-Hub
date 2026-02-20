@@ -13,7 +13,10 @@ using InternMS.Api.Services.Token;
 using InternMS.Api.Services.Projects;
 using InternMS.Api.Services.Users;
 using InternMS.Api.Middleware;
-
+using InternMS.Api.Services.Email;
+// using Microsoft.OpenApi;
+// using Swashbuckle.AspNetCore.SwaggerGen;
+// using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +27,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
 // Application Services
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProjectService, ProjectService>();
@@ -31,6 +35,7 @@ builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenService, JwtTokenService>();
 builder.Services.AddScoped<ITaskService, TaskService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 // SignalR
 builder.Services.AddSignalR();

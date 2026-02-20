@@ -15,7 +15,11 @@ namespace InternMS.Infrastructure.Configrations
             builder.Property(u => u.PasswordHash).IsRequired();
             builder.Property(u => u.FirstName).HasMaxLength(100);
             builder.Property(u => u.LastName).HasMaxLength(100);
-            builder.Property(u => u.IsActive).HasDefaultValue(true);
+            builder.Property(u => u.EmailConfirmed).HasDefaultValue(false);
+            builder.Property(u => u.AdminApproved).HasDefaultValue(false);
+            builder.Property(u => u.EmailConfirmationToken).HasMaxLength(255);
+            builder.Property(u => u.EmailConfirmationTokenExpires);
+            builder.Property(u => u.IsActive).HasDefaultValue(false);
             builder.Property(u => u.CreatedAt).HasDefaultValueSql("now()");
 
             // Relationships 

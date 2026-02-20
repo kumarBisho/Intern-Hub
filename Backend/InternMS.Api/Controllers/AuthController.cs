@@ -26,6 +26,23 @@ namespace InternMS.Api.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet("confirm-email")]
+        public async Task<IActionResult> ConfirmEmail(string token)
+        {
+            var user = await _authService.ConfirmEmailAsync(token);
+            if(user == null) return BadRequest(new { message = "Invalid or expired token." });
+            return Ok(new { message = "Email confirmed successfully. You can now log in." });
+        }
+
+        // [Authorize(Roles = "Admin")]
+        [HttpPost("approve/{userId}")]
+        public async Task<IActionResult> ApproveUser(Guid userId)
+        {
+            var result = await _authService.ApproveUserAsync(userId);
+            if (!result) return BadRequest(new { message = "User not found or already approved." });
+            return Ok(new { message = "User approved successfully." });
+        }
+
         // Register - restrict to Admin role (change as needed)
         
         [HttpPost("register")]

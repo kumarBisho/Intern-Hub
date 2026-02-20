@@ -101,6 +101,15 @@ Then call Migration script to create Model.
 After running Migration script "Migration" folder will be automatically created.
 Now you can see Your Database/Tables on online server.
 
+# Code for Migration/Update of DataBase 
+Go to Root folder /Backend , where .slnx file present.
+Run Below Command
+1. dotnet ef migrations add <MigrationName> -p InternMS.Infrastructure -s InternMS.Api
+2. dotnet ef database update -p InternMS.Infrastructure -s InternMS.Api
+
+-p => MigrationName
+-s => Startup project (Program.cs)
+
 # Business Logic
 cd InternMS.Api
 Controllers -> for creating routes
@@ -115,3 +124,6 @@ Program.cs -> Entry point of the application.
 InternMS.slnx -> It is a container that holds multiple projects, That will be combined to work together.
 README.md -> Documentation of Backend part of This project.
 Summary_Of_folder_Structure.txt -> Folder structure of Project.
+
+<!-- password for smtp 
+vjyqjktpsfyedhvk -->

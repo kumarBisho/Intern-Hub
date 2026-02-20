@@ -10,7 +10,11 @@ namespace InternMS.Domain.Entities
         public string PasswordHash { get; set; } = string.Empty;
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
-        public bool IsActive { get; set; } = true;
+        public bool EmailConfirmed { get; set; } = false;
+        public bool AdminApproved { get; set; } = false;
+        public string? EmailConfirmationToken { get; set; }
+        public DateTime? EmailConfirmationTokenExpires { get; set; }
+        public bool IsActive { get; set; } = false;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public UserProfile? Profile { get; set;}
         public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
