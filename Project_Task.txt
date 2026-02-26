@@ -1,5 +1,10 @@
---> I need to test Registration with Mail verification.
+--> I need to test Registration with Mail verification. (Done)
+1. Fine tune admin logic.
+2. Handle EmailConfirmationToken logic.
+3. Enhence Access restriction logic. 
+4. Testing and debugging of Account activation logic section.
 
---> Access Token and Refresh Token Implementation for login user.
+
+--> Access Token and Refresh Token Implementation for login user.(active)
 
 --> DB relation in Table from One Table to Other Table.

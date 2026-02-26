@@ -106,6 +106,7 @@ namespace InternMS.Api.Services.Auth
             await _db.SaveChangesAsync();
 
             var confirmLink = $"http://localhost:5248/api/auth/confirm-email?token={token}";
+            var verifyUserLink = $"http://localhost:5248/api/auth/approve-user?userId={user.Id}";
             
             await _emailService.SendEmailAsync(
                 email,
@@ -116,7 +117,7 @@ namespace InternMS.Api.Services.Auth
             await _emailService.SendEmailAsync(
                 "2021uec1535@mnit.ac.in",
                 "New User Registration",
-                $"A new user has registered with the email: {email}. Please review and approve the account in the admin panel."
+                $"A new user has registered with the email: {email}. Please review and approve the account by clicking <a href='{verifyUserLink}'>here</a>."
             );
 
             await _db.Entry(user).Collection(u => u.UserRoles).LoadAsync();

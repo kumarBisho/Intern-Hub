@@ -35,7 +35,7 @@ namespace InternMS.Api.Controllers
         }
 
         // [Authorize(Roles = "Admin")]
-        [HttpPost("approve/{userId}")]
+        [HttpGet("approve-user")]
         public async Task<IActionResult> ApproveUser(Guid userId)
         {
             var result = await _authService.ApproveUserAsync(userId);

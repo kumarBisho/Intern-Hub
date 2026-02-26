@@ -62,6 +62,10 @@ InternHub
 |    │   │   │   ├── IDashboardService.cs
 |    │   │   │   └── DashboardService.cs
 |    │   │   │
+|    │   │   ├── Email
+|    │   │   │   ├── IEmailService.cs
+|    │   │   │   └── EmailService.cs
+|    │   │   │
 |    │   │   ├── Tasks
 |    │   │   │   ├── ITaskService.cs
 |    │   │   │   └── TaskService.cs
