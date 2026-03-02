@@ -14,6 +14,7 @@ namespace InternMS.Infrastructure.Data
 
         public DbSet<User> Users => Set<User> ();
         public DbSet<BlacklistedToken> BlacklistedTokens => Set<BlacklistedToken>();
+        public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
         public DbSet<Role> Roles => Set<Role>();
         public DbSet<UserRole> UserRoles => Set<UserRole>();
         public DbSet<UserProfile> Profiles => Set<UserProfile>();
@@ -35,6 +36,7 @@ namespace InternMS.Infrastructure.Data
             modelBuilder.ApplyConfiguration(new ProjectAssignmentConfiguration());
             modelBuilder.ApplyConfiguration(new ProjectUpdateConfiguration());
             modelBuilder.ApplyConfiguration(new NotificationConfiguration());
+            modelBuilder.ApplyConfiguration(new RefreshTokenConfiguration());
         }
     }
 

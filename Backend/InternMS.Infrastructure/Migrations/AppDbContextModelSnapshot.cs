@@ -17,7 +17,7 @@ namespace InternMS.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.2")
+                .HasAnnotation("ProductVersion", "10.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -231,6 +231,41 @@ namespace InternMS.Infrastructure.Migrations
                     b.HasIndex("ProjectId");
 
                     b.ToTable("project_updates", (string)null);
+                });
+
+            modelBuilder.Entity("InternMS.Domain.Entities.RefreshToken", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("now()");
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsRevoked")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("refresh_tokens", (string)null);
                 });
 
             modelBuilder.Entity("InternMS.Domain.Entities.Role", b =>
@@ -458,6 +493,17 @@ namespace InternMS.Infrastructure.Migrations
                     b.Navigation("Project");
                 });
 
+            modelBuilder.Entity("InternMS.Domain.Entities.RefreshToken", b =>
+                {
+                    b.HasOne("InternMS.Domain.Entities.User", "User")
+                        .WithOne("RefreshToken")
+                        .HasForeignKey("InternMS.Domain.Entities.RefreshToken", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("InternMS.Domain.Entities.UserProfile", b =>
                 {
                     b.HasOne("InternMS.Domain.Entities.User", "User")
@@ -509,6 +555,8 @@ namespace InternMS.Infrastructure.Migrations
                     b.Navigation("CreateTasks");
 
                     b.Navigation("Profile");
+
+                    b.Navigation("RefreshToken");
 
                     b.Navigation("UserRoles");
                 });

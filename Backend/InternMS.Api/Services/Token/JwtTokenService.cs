@@ -22,11 +22,11 @@ namespace InternMS.Api.Services.Token
             _issuer = _config["Jwt:Issuer"] ?? "internms";
             _audience = _config["Jwt:Audience"] ?? "internms-users";
             _key = _config["Jwt:Key"] ?? throw new ArgumentNullException("Jwt:Key configuration is missing");
-            int.TryParse(_config["Jwt:ExpiryMinutes"], out _expiryMinutes);
+            int.TryParse(_config["Jwt:AccessTokenMinutes"], out _expiryMinutes);
             if (_expiryMinutes <= 0) _expiryMinutes = 60 * 24;
         }
 
-        public string CreateToken(Guid userId, string email, IEnumerable<string> roles)
+        public string CreateAccessToken(Guid userId, string email, IEnumerable<string> roles)
         {
             var claims = new List<Claim>
             {
@@ -42,16 +42,27 @@ namespace InternMS.Api.Services.Token
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_key));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var expiry = DateTime.UtcNow.AddMinutes(int.Parse(_config["Jwt:AccessTokenMinutes"]!));
 
             var token = new JwtSecurityToken(
                 issuer: _issuer,
                 audience: _audience,
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(_expiryMinutes),
+                expires: expiry,
                 signingCredentials: creds
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        public string GenerateRefreshToken()
+        {
+            var randomBytes = new byte[64];
+            using (var rng = System.Security.Cryptography.RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(randomBytes);
+                return Convert.ToBase64String(randomBytes);
+            }
         }
     }
 }

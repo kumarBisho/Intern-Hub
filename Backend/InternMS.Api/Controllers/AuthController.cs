@@ -6,6 +6,9 @@ using InternMS.Api.Services.Token;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using InternMS.Api.Middleware;
+using InternMS.Domain.Entities;
+using InternMS.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace InternMS.Api.Controllers
 {
@@ -17,13 +20,15 @@ namespace InternMS.Api.Controllers
         private readonly IAuthService _authService;
         private readonly ITokenService _tokenService;
         private readonly IMapper _mapper;
+        private readonly AppDbContext _context;
 
 
-        public AuthController(IAuthService authService, ITokenService tokenService, IMapper mapper)
+        public AuthController(IAuthService authService, ITokenService tokenService, IMapper mapper, AppDbContext context)
         {
             _authService = authService;
             _tokenService = tokenService;
             _mapper = mapper;
+            _context = context;
         }
 
         [HttpGet("confirm-email")]
@@ -71,11 +76,20 @@ namespace InternMS.Api.Controllers
 
 
             var roles = user.UserRoles?.Select(ur => ur.Role.Name) ?? new string[0];
-            var token = _tokenService.CreateToken(user.Id, user.Email, roles);
+            var accessToken = _tokenService.CreateAccessToken(user.Id, user.Email, roles);
+            var refreshToken = _tokenService.GenerateRefreshToken();
 
+            var RefreshToken = new RefreshToken{
+                Token = refreshToken,
+                UserId = user.Id,
+                ExpiresAt = DateTime.UtcNow.AddDays(7) // Set refresh token expiry (configurable)
+            };
+
+            _context.RefreshTokens.Add(RefreshToken);
+             await _context.SaveChangesAsync();
 
             var userDto = _mapper.Map<UserDto>(user);
-            var response = new LoginResponseDto { Token = token, User = userDto };
+            var response = new LoginResponseDto { AccessToken = accessToken, RefreshToken = refreshToken, User = userDto };
             return Ok(response);
         }
 
@@ -93,6 +107,15 @@ namespace InternMS.Api.Controllers
             var token = authHeader.Replace("Bearer ", "");
             await _authService.LogoutAsync(token);
             return Ok(new { message = "Successfully logged out." });
+        }
+
+        // Refresh Token Endpoint
+        [HttpPost("refresh-token")]
+        public async Task<IActionResult> RefreshToken(RefreshTokenRequestDto request)
+        {
+            var result = await _authService.RefreshTokenAsync(request.RefreshToken);
+            if (result == null) return BadRequest(new { message = "Invalid or expired refresh token." });
+            return Ok(result);
         }
     }
 }

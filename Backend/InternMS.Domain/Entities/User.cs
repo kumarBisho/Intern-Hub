@@ -17,6 +17,7 @@ namespace InternMS.Domain.Entities
         public bool IsActive { get; set; } = false;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public UserProfile? Profile { get; set;}
+        public RefreshToken? RefreshToken { get; set; }
         public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
         public ICollection<Project> CreateProjects { get; set; } = new List<Project>();
         public ICollection<ProjectTask> CreateTasks { get; set; } = new List<ProjectTask>();

@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using InternMS.Domain.Entities;
+using InternMS.Api.DTOs.Authentication;
 
 namespace InternMS.Api.Services.Auth
 {
@@ -12,6 +13,7 @@ namespace InternMS.Api.Services.Auth
         Task<User?> RegisterUserAsync(string email, string password, string firstName, string lastName, int roleId);
         Task LogoutAsync(string token);
         Task<bool> IsTokenBlacklistedAsync(string token);
+        Task<LoginResponseDto?> RefreshTokenAsync(string refreshToken);
 
     }
 }

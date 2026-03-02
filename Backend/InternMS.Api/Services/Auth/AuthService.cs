@@ -5,7 +5,11 @@ using BCrypt.Net;
 using InternMS.Infrastructure.Data;
 using InternMS.Domain.Entities;
 using InternMS.Api.Services.Email;
+using InternMS.Api.Services.Token;
+using InternMS.Api.DTOs.Authentication; 
 using System;
+using Microsoft.AspNetCore.Http.HttpResults;
+
 
 namespace InternMS.Api.Services.Auth
 {
@@ -13,11 +17,13 @@ namespace InternMS.Api.Services.Auth
     {
         private readonly AppDbContext _db;
         private readonly IEmailService _emailService;
+        private readonly ITokenService _tokenService;
 
-        public AuthService(AppDbContext db, IEmailService emailService)
+        public AuthService(AppDbContext db, IEmailService emailService, ITokenService tokenService)
         {
             _db = db;
             _emailService = emailService;
+            _tokenService = tokenService;
         }
 
         public async Task<User?> ConfirmEmailAsync(string token)
@@ -125,25 +131,53 @@ namespace InternMS.Api.Services.Auth
             return user;
         }
 
-        public async Task LogoutAsync(string token)
+        public async Task LogoutAsync(string refreshToken)
         {
-            var handler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
-            var jwt = handler.ReadJwtToken(token);
+            var token = await _db.RefreshTokens.FirstOrDefaultAsync(t=>t.Token == refreshToken);
 
-            var expiryDate = jwt.ValidTo;
-            var blacklistedToken = new BlacklistedToken
+            if(token != null)
             {
-                Token = token,
-                ExpiryDate = expiryDate,
-                RevokedAt = DateTime.UtcNow
-            };
-            _db.BlacklistedTokens.Add(blacklistedToken);
-            await _db.SaveChangesAsync();
+                token.IsRevoked = true;
+                await _db.SaveChangesAsync();
+            }
         }
 
         public async Task<bool> IsTokenBlacklistedAsync(string token)
         {
             return await _db.BlacklistedTokens.AnyAsync(t=> t.Token == token && t.ExpiryDate > DateTime.UtcNow);
+        }
+
+        public async Task<LoginResponseDto?> RefreshTokenAsync(string refreshToken)
+        {
+            var storedToken = await _db.RefreshTokens.Include(r=>r.User).ThenInclude(u=>u.UserRoles).ThenInclude(ur=>ur.Role).FirstOrDefaultAsync(rt=>rt.Token == refreshToken && !rt.IsRevoked && rt.ExpiresAt > DateTime.UtcNow);
+
+            if(storedToken == null) return null;
+
+            var roles = storedToken.User.UserRoles?.Select(r=>r.Role.Name)?? new string[0];
+
+            var accessToken =  _tokenService.CreateAccessToken(storedToken.User.Id, storedToken.User.Email, roles);
+
+            var newRefreshToken = _tokenService.GenerateRefreshToken();
+            storedToken.IsRevoked = true;
+            var newTokenEntity = new RefreshToken
+            {
+                Token = newRefreshToken,
+                UserId = storedToken.UserId,
+                ExpiresAt = DateTime.UtcNow.AddDays(7)
+            };
+            _db.RefreshTokens.Add(new RefreshToken
+            {
+                Token = newRefreshToken,
+                UserId = storedToken.UserId,
+                ExpiresAt = DateTime.UtcNow.AddDays(7)
+            });
+            await _db.SaveChangesAsync();
+
+            return new LoginResponseDto
+            {
+                AccessToken = accessToken,
+                RefreshToken = newRefreshToken
+            };
         }
 
     }

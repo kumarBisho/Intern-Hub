@@ -26,6 +26,7 @@ namespace InternMS.Infrastructure.Configrations
             builder.HasMany(u => u.UserRoles).WithOne(ur => ur.User).HasForeignKey(ur => ur.UserId);
             builder.HasOne(u => u.Profile).WithOne(p => p.User).HasForeignKey<UserProfile>(p => p.UserId);
             builder.HasMany(u => u.CreateProjects).WithOne(p => p.CreatedBy).HasForeignKey(p => p.CreatedById);
+            builder.HasOne(u => u.RefreshToken).WithOne(rt => rt.User).HasForeignKey<RefreshToken>(rt => rt.UserId);
         }
     }
 }
